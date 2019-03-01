@@ -34,7 +34,7 @@ VOLUME /etc/nginx/certs
 VOLUME /etc/nginx/extra
 
 # Expose ports nginx listens to
-EXPOSE 80 443
+EXPOSE 80
 
 # Startup scripts
 ADD conf/supervisor/ /etc/supervisor/conf.d/

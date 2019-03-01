@@ -41,18 +41,6 @@ extra nginx configuration files to `/etc/nginx/extra`
 
 ### Requirements
 
-##### SSL Certificates
-
-Before building the image, place the server's ssl certificates in the folder `./certs` for running nginx over https.
-
-```sh
-./certs/cert.pem;
-./certs/cert.key;
-```
-
-For local testing, check these [instructions](https://www.digitalocean.com/community/tutorials/how-to-create-an-ssl-certificate-on-nginx-for-ubuntu-14-04)
-on how to create a self-signed certificate.
-
 ##### Cloud users list
 
 When running the container, a list of users w/ their unique ids has to be provided to the container via environment variables.
@@ -70,9 +58,8 @@ where -t is the container's tag name.
 
 To run the container, execute
 
-`docker run -d -p 80:80 -p 443:443 -v /path/to/nginx/ssl-certs/folder/:/etc/nginx/certs/ -v /optional/path/to/extra/conf:/etc/nginx/extra --env-file path/to/users_definition --env-file path/to/cloud_configuration -e PROXY_HOST=172.17.42.1 --name cloud-frontend-proxy cloud-frontend-proxy`
+`docker run -d -p 80:80 -v /optional/path/to/extra/conf:/etc/nginx/extra --env-file path/to/users_definition --env-file path/to/cloud_configuration -e PROXY_HOST=172.17.42.1 --name cloud-frontend-proxy cloud-frontend-proxy`
 
-- `-p` here is binding to the usual 80 / 443 ports
+- `-p` here is binding to the usual 80 port
 - `--env-file` sources the environment variables from the provided file, which should contain a list of all user & their ids, plus the cloud-development main configuration
 - `PROXY_HOST` should match the host that will server the code-editor/webserver containers (leave empty to use host calling script)
-- optionally override build image certificates by pointing `cert.crt`, `cert.key` files to `/etc/nginx/certs`

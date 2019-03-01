@@ -57,7 +57,7 @@ function launchFrontendProxy()
     if [ $MODE = "direct" ] ; then
         $(removeContainer "cloud-frontend-proxy")
         if [ $ACTION = "start" ] ; then
-            /usr/bin/docker run -d -p 80:80 -p 443:443 -v $CERTIFICATES_PATH:/etc/nginx/certs --env-file $CONFIG_PATH --env-file $USERS_CONFIG_PATH -e PROXY_HOST=$PROXY_HOST $DOCKER_RUN_EXTRAS --name cloud-frontend-proxy cloud-frontend-proxy
+            /usr/bin/docker run -d -p 80:80 --env-file $CONFIG_PATH --env-file $USERS_CONFIG_PATH -e PROXY_HOST=$PROXY_HOST $DOCKER_RUN_EXTRAS --name cloud-frontend-proxy cloud-frontend-proxy
         fi
     else
         $ACTION cloud_frontend_proxy CERTIFICATES_PATH=$CERTIFICATES_PATH CONFIG_PATH=$CONFIG_PATH DOCKER_RUN_EXTRAS=$(escapeSpecialChars "$DOCKER_RUN_EXTRAS") USERS_CONFIG_PATH=$USERS_CONFIG_PATH PROXY_HOST=$PROXY_HOST
